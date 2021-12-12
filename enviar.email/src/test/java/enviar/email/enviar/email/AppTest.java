@@ -14,7 +14,7 @@ public class AppTest
 		properties.put("mail.smtp.host", "smtp.gmail.com");// Servidor gmail google.
 		properties.put("mail.smtp.port", "465");//Porta do servidor.
 		properties.put("mail.smtp.socketFactory.port", "465");// Expecifica a porta a ser usada pelo socket.
-		properties.put(properties, properties);
+		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");//Classe socket de conexão.
 		
 	}
   
