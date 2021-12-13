@@ -2,9 +2,14 @@ package enviar.email.enviar.email;
 
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Authenticator;
+import javax.mail.Message;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class AppTest 
 {
@@ -33,7 +38,17 @@ public class AppTest
 				}
 			 });
 		 
-		System.out.println(senha);
+	Address[] toUser = InternetAddress.parse("josuejdevjava@gmail.com, jolimonjes@gmail.com, lisliefernandes@gmail.com");
+	
+	Message message = new MimeMessage(session);
+	message.setFrom(new InternetAddress(userName));//Quem está enviando.
+	message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.	
+	message.setSubject("Chegou o email enviado pelo java - Josué");//Assunto do email.
+	message.setText("Você acaba de receber um email enviado do curso JDEV-Treinamento.");
+	
+	Transport.send(message);
+	
+	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
