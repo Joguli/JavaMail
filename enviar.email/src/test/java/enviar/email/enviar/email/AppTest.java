@@ -38,7 +38,7 @@ public class AppTest
 				}
 			 });
 		 
-	Address[] toUser = InternetAddress.parse("josuejdevjava@gmail.com, jolimonjes@gmail.com, lisliefernandes@gmail.com");
+	Address[] toUser = InternetAddress.parse("jolimonjes@gmail.com, lisliefernandes@gmail.com");
 	
 	Message message = new MimeMessage(session);
 	message.setFrom(new InternetAddress(userName));//Quem está enviando.
@@ -51,9 +51,8 @@ public class AppTest
 	
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-		
-		
+		}	
+
 	}
   
 }
