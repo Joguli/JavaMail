@@ -23,6 +23,7 @@ public class AppTest
 			//Olha as configurações do smtp do seu email.
 			Properties properties = new Properties();
 			
+			properties.put("mail.smtp.ssl.trust", "*");
 			properties.put("mail.smtp.auth", "true");// Autorização.
 			properties.put("mail.smtp.starttls", "");// Autenticação.
 			properties.put("mail.smtp.host", "smtp.gmail.com");// Servidor gmail google.
