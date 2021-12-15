@@ -42,7 +42,7 @@ public class AppTest
 	Address[] toUser = InternetAddress.parse("jolimonjes@gmail.com, lisliefernandes@gmail.com");
 	
 	Message message = new MimeMessage(session);
-	message.setFrom(new InternetAddress(userName, "Primeiro sistema de envio de email - Josué"));//Quem está enviando.
+	message.setFrom(new InternetAddress(userName, "Josué - Primeiro sistema de envio de email"));//Quem está enviando.
 	message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.	
 	message.setSubject("Este email foi enviado pelo java - Josué");//Assunto do email.
 	message.setText("Você acaba de receber um email enviado pelo curso JDEV-Treinamento.");
