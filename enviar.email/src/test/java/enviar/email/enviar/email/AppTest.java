@@ -17,10 +17,14 @@ public class AppTest
 	private String userName = "josuejdevjava@gmail.com";
 	private String senha = "ruiandrade";
 	@org.junit.Test
-	public void testeEmail() throws InterruptedException {
+	public void testeEmail() throws Throwable {
 		
+		ObjetoEnviaEmail enviaEmail = 
+				new ObjetoEnviaEmail("jolimonjes@gmail.com, vintetrezi@gmail.com", "DJv treinamento", "josuejdevjava@gmail.com", "Serviço de envio de email com java.");
+		
+		enviaEmail.enviarEmail();
 		Thread.sleep(5000);
 
 	}
-  
+    
 }
