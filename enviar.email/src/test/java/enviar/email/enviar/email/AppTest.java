@@ -19,10 +19,16 @@ public class AppTest
 	@org.junit.Test
 	public void testeEmail() throws Throwable {
 		
+		StringBuilder stringBuilderEnviarEmail = new StringBuilder();
+		stringBuilderEnviarEmail.append("Testando HTML.");
 		ObjetoEnviaEmail enviaEmail = 
-				new ObjetoEnviaEmail("jolimonjes@gmail.com, vintetrezi@gmail.com", "DJv treinamento", "josuejdevjava@gmail.com", "Serviço de envio de email com java.");
+				new ObjetoEnviaEmail("jolimonjes@gmail.com, vintetrezi@gmail.com",
+						"DJv treinamento",
+							"josuejdevjava@gmail.com", 
+								"Serviço de envio de email com java. Testando HTML",
+									stringBuilderEnviarEmail.toString());
 		
-		enviaEmail.enviarEmail(false);
+		enviaEmail.enviarEmail(true);
 		Thread.sleep(5000);
 
 	}

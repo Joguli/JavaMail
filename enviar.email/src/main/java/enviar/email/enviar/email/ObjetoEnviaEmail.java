@@ -26,6 +26,9 @@ public class ObjetoEnviaEmail {
 		this.assuntoEmail = assuntoEmail;
 		this.textoEmail = texString;
 	}
+	public ObjetoEnviaEmail(String string, String string2, String string3, String string4, String string5) {
+		// TODO Auto-generated constructor stub
+	}
 	public void enviarEmail(boolean envioHTML) throws Exception {
 
 		// Olha as configurações do smtp do seu email.
