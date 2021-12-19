@@ -26,7 +26,7 @@ public class ObjetoEnviaEmail {
 		this.assuntoEmail = assuntoEmail;
 		this.textoEmail = texString;
 	}
-	public void enviarEmail() throws Exception {
+	public void enviarEmail(boolean envioHTML) throws Exception {
 
 		// Olha as configurações do smtp do seu email.
 		Properties properties = new Properties();
@@ -54,7 +54,14 @@ public class ObjetoEnviaEmail {
 																										// enviando.
 		message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.
 		message.setSubject(assuntoEmail);// Assunto do email.
-		message.setText(textoEmail);
+		
+		
+		if(envioHTML){
+			message.setContent(textoEmail, "text/html; charset=utf-8");
+		}else {
+			message.setText(textoEmail);
+		}
+		
 
 		Transport.send(message);
 	}
