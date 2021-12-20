@@ -20,13 +20,17 @@ public class AppTest
 	public void testeEmail() throws Throwable {
 		
 		StringBuilder stringBuilderEnviarEmail = new StringBuilder();
-		stringBuilderEnviarEmail.append("Testando HTML.");
+		stringBuilderEnviarEmail.append("<h1>Olá<h1/><br/><br/>");
+		stringBuilderEnviarEmail.append("<h2>Você está recebendo acesso ao curso de HTML.<h2/><br/>");
+		stringBuilderEnviarEmail.append("<h4>Você pode ter acesso no botão abaixo.<h4/>");
+		stringBuilderEnviarEmail.append("<a target=\"_blank\" href=\"https://projetojavaweb.com/certificado-aluno/login\">"
+				+ "Acesse o portal</a>");
+		
 		ObjetoEnviaEmail enviaEmail = 
 				new ObjetoEnviaEmail("jolimonjes@gmail.com, vintetrezi@gmail.com",
 						"DJv treinamento",
 							"josuejdevjava@gmail.com", 
-								"Serviço de envio de email com java. Testando HTML",
-									stringBuilderEnviarEmail.toString());
+								stringBuilderEnviarEmail.toString());
 		
 		enviaEmail.enviarEmail(true);
 		Thread.sleep(5000);
