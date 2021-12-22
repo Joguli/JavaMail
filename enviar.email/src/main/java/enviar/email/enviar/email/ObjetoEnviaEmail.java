@@ -1,5 +1,8 @@
 package enviar.email.enviar.email;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Properties;
 
 import javax.mail.Address;
@@ -10,6 +13,11 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import com.itextpdf.text.pdf.PdfWriter;
 
 public class ObjetoEnviaEmail {
 
@@ -69,4 +77,30 @@ public class ObjetoEnviaEmail {
 		Transport.send(message);
 	}
 
+	/*Esse método simula PDF ou qualquer outro arquivo.
+	 * Retorna um PDF em branco com o texto do parágrafo.
+	 * */
+	private FileInputStream simuladorDePDF() throws Exception{
+		Document documento = new Document();
+		File file = new File("fileanexo.pdf");
+		file.createNewFile();
+		PdfWriter.getInstance(documento, new FileOutputStream(file));
+		documento.open();
+		documento.add(new Paragraph("Conteúdo do anexo JavaMail"));
+		documento.close();
+		
+		return new FileInputStream(file);
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
