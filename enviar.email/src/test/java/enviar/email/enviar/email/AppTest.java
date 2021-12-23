@@ -35,7 +35,9 @@ public class AppTest
 							"josuejdevjava@gmail.com", 
 								stringBuilderEnviarEmail.toString());
 		
-		enviaEmail.enviarEmail(true);
+		enviaEmail.enviarEmailAnexo(true);
+		
+		
 		Thread.sleep(5000);
 
 	}

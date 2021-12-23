@@ -5,19 +5,25 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Properties;
 
+import javax.activation.DataHandler;
 import javax.mail.Address;
 import javax.mail.Authenticator;
 import javax.mail.Message;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.qrcode.ByteArray;
 
 public class ObjetoEnviaEmail {
 
@@ -66,14 +72,28 @@ public class ObjetoEnviaEmail {
 		message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.
 		message.setSubject(assuntoEmail);// Assunto do email.
 		
+		/*parte 1 do email que é o texto e a descrição do email.*/
+		MimeBodyPart corpoEmail = new MimeBodyPart();
 		
 		if(envioHTML){
-			message.setContent(textoEmail, "text/html; charset=utf-8");
+			corpoEmail.setContent(textoEmail, "text/html; charset=utf-8");
 		}else {
-			message.setText(textoEmail);
+			corpoEmail.setText(textoEmail);
 		}
 		
-
+		/* Parte 2 do email que sao os anexos em PDF*/
+		MimeBodyPart anexoEmail = new MimeBodyPart();
+		/* Onde é passado o simulador de PDF. */
+		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "aplication/PDF")));
+		anexoEmail.setFileName("anexoEmail.pdf");
+		
+		/* Junta as duas partes do email*/
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(corpoEmail);
+		multipart.addBodyPart(anexoEmail);
+		
+		message.setContent(multipart);
+		
 		Transport.send(message);
 	}
 
@@ -90,6 +110,10 @@ public class ObjetoEnviaEmail {
 		documento.close();
 		
 		return new FileInputStream(file);
+		
+	}
+	public void enviarEmailAnexo(boolean b) {
+		// TODO Auto-generated method stub
 		
 	}
 	
