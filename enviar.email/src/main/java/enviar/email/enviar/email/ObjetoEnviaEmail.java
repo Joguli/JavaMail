@@ -72,6 +72,60 @@ public class ObjetoEnviaEmail {
 		message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.
 		message.setSubject(assuntoEmail);// Assunto do email.
 		
+		/*parte 1 do email que é o texto e a descrição do email.
+		MimeBodyPart corpoEmail = new MimeBodyPart();*/
+		
+		if(envioHTML){
+			message.setContent(textoEmail, "text/html; charset=utf-8");
+		}else {
+			message.setText(textoEmail);
+		}
+		
+		/* Parte 2 do email que sao os anexos em PDF
+		MimeBodyPart anexoEmail = new MimeBodyPart();
+		/* Onde é passado o simulador de PDF. *
+		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "aplication/PDF")));
+		anexoEmail.setFileName("anexoEmail.pdf");
+		
+		/* Junta as duas partes do email*
+		Multipart multipart = new MimeMultipart();
+		multipart.addBodyPart(corpoEmail);
+		multipart.addBodyPart(anexoEmail);
+		
+		message.setContent(multipart);*/
+		
+		Transport.send(message);
+	}
+
+	public void enviarEmailAnexo1(boolean envioHTML) throws Exception {
+
+		// Olha as configurações do smtp do seu email.
+		Properties properties = new Properties();
+
+		properties.put("mail.smtp.ssl.trust", "*");
+		properties.put("mail.smtp.auth", "true");// Autorização.
+		properties.put("mail.smtp.starttls", "");// Autenticação.
+		properties.put("mail.smtp.host", "smtp.gmail.com");// Servidor gmail google.
+		properties.put("mail.smtp.port", "465");// Porta do servidor.
+		properties.put("mail.smtp.socketFactory.port", "465");// Expecifica a porta a ser usada pelo socket.
+		properties.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");// Classe socket de conexão.
+
+		Session session = Session.getInstance(properties, new Authenticator() {
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				// TODO Auto-generated method stub
+				return new PasswordAuthentication(userName, senha);
+			}
+		});
+
+		Address[] toUser = InternetAddress.parse(listaDestinatarios);
+
+		Message message = new MimeMessage(session);
+		message.setFrom(new InternetAddress(userName, nomeRemetente));// Quem está
+																										// enviando.
+		message.setRecipients(Message.RecipientType.TO, toUser);// email de destino.
+		message.setSubject(assuntoEmail);// Assunto do email.
+		
 		/*parte 1 do email que é o texto e a descrição do email.*/
 		MimeBodyPart corpoEmail = new MimeBodyPart();
 		
@@ -84,8 +138,8 @@ public class ObjetoEnviaEmail {
 		/* Parte 2 do email que sao os anexos em PDF*/
 		MimeBodyPart anexoEmail = new MimeBodyPart();
 		/* Onde é passado o simulador de PDF. */
-		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "aplication/PDF")));
-		anexoEmail.setFileName("anexoEmail.pdf");
+		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "application/pdf")));
+		anexoEmail.setFileName("anexoemail.pdf");
 		
 		/* Junta as duas partes do email*/
 		Multipart multipart = new MimeMultipart();
@@ -96,7 +150,6 @@ public class ObjetoEnviaEmail {
 		
 		Transport.send(message);
 	}
-
 	/*Esse método simula PDF ou qualquer outro arquivo.
 	 * Retorna um PDF em branco com o texto do parágrafo.
 	 * */
