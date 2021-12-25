@@ -3,6 +3,7 @@ package enviar.email.enviar.email;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -20,6 +21,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.mail.util.ByteArrayDataSource;
 
 import com.itextpdf.text.Document;
+import com.itextpdf.text.List;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -27,6 +29,7 @@ import com.itextpdf.text.pdf.qrcode.ByteArray;
 
 public class ObjetoEnviaEmail {
 
+	private static final String FileInputStream = null;
 	private String userName = "josuejdevjava@gmail.com";
 	private String senha = "ruiandrade";
 	private String listaDestinatarios = "";
@@ -116,7 +119,7 @@ public class ObjetoEnviaEmail {
 				// TODO Auto-generated method stub
 				return new PasswordAuthentication(userName, senha);
 			}
-		});
+		}); 
 
 		Address[] toUser = InternetAddress.parse(listaDestinatarios);
 
@@ -135,16 +138,28 @@ public class ObjetoEnviaEmail {
 			corpoEmail.setText(textoEmail);
 		}
 		
-		/* Parte 2 do email que sao os anexos em PDF*/
-		MimeBodyPart anexoEmail = new MimeBodyPart();
-		/* Onde é passado o simulador de PDF. */
-		anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "application/pdf")));
-		anexoEmail.setFileName("anexoemail.pdf");
+		List <FileInputStream> arquivos = new ArrayList<FileInputStream>();
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
+		arquivos.add(simuladorDePDF());
 		
-		/* Junta as duas partes do email*/
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(corpoEmail);
-		multipart.addBodyPart(anexoEmail);
+		
+		for (FileInputStream felFileInputStream : arquivos) {
+
+			/* Parte 2 do email que sao os anexos em PDF */
+			MimeBodyPart anexoEmail = new MimeBodyPart();
+			/* Onde é passado o simulador de PDF. */
+			anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "application/pdf")));
+			anexoEmail.setFileName("anexoemail.pdf");
+
+			/* Junta as duas partes do email */
+
+			multipart.addBodyPart(anexoEmail);
+
+		}
 		
 		message.setContent(multipart);
 		
