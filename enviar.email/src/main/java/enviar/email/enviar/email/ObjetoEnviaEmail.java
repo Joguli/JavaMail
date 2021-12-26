@@ -138,27 +138,29 @@ public class ObjetoEnviaEmail {
 			corpoEmail.setText(textoEmail);
 		}
 		
-		List <FileInputStream> arquivos = new ArrayList<FileInputStream>();
-		arquivos.add(simuladorDePDF());
-		arquivos.add(simuladorDePDF());
-		arquivos.add(simuladorDePDF());
-		arquivos.add(simuladorDePDF());
+		java.util.List<FileInputStream> arquivos = new ArrayList<FileInputStream>();
+		arquivos.add(simuladorDePDF());// Certificado
+		arquivos.add(simuladorDePDF());//Nota Fiscal
+		arquivos.add(simuladorDePDF());//Manual
+		arquivos.add(simuladorDePDF());//Boleto
 		
 		Multipart multipart = new MimeMultipart();
 		multipart.addBodyPart(corpoEmail);
 		
+		int index = 0;
 		for (FileInputStream felFileInputStream : arquivos) {
 
 			/* Parte 2 do email que sao os anexos em PDF */
 			MimeBodyPart anexoEmail = new MimeBodyPart();
 			/* Onde é passado o simulador de PDF. */
 			anexoEmail.setDataHandler(new DataHandler(new ByteArrayDataSource(simuladorDePDF(), "application/pdf")));
-			anexoEmail.setFileName("anexoemail.pdf");
+			anexoEmail.setFileName("anexoemail " + index + ".pdf");
 
 			/* Junta as duas partes do email */
 
 			multipart.addBodyPart(anexoEmail);
-
+			
+			index++;
 		}
 		
 		message.setContent(multipart);
